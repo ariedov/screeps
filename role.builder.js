@@ -39,7 +39,6 @@ module.exports = {
                     if (targets.length) {
                         target = creep.pos.findClosestByRange(targets);
                         creep.memory.target = target.id;
-                        target.memory.builder = creep.id;
                         this.build(creep, target);
                     }
                 }
