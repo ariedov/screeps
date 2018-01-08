@@ -68,8 +68,10 @@ module.exports = {
     console.log("upgraders: " + Memory.count.upgrader + " harvesters: " + Memory.count.harvester + " rechargers: " + Memory.count.recharger + " warriors: " + Memory.count.warrior + " builders: " + Memory.count.builder);
     if (Memory.count.upgrader == 0) {
       console.log("upgraders.length == 0");
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], undefined, {
-          role: 'upgrader'
+      if (spawn.spawnCreep([WORK, CARRY, MOVE], "UPGRADER_" + Game.time, {
+          memory {
+            role: 'upgrader'
+          }
         }) == OK) {
         console.log("creating upgrader");
         Memory.count['upgrader'] += 1;
@@ -78,8 +80,10 @@ module.exports = {
       }
     } else if (Memory.count.recharger == 0) {
       console.log("rechargers.length == 0");
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], undefined, {
-          role: 'recharger'
+      if (spawn.spawnCreep([WORK, CARRY, MOVE], "RECHARGER_" + Game.time, {
+          memory {
+            role: 'recharger'
+          }
         }) == OK) {
         console.log("creating recharger");
         Memory.count['recharger'] += 1;
@@ -88,8 +92,10 @@ module.exports = {
       }
     } else if (Memory.count.harvester < 3) {
       console.log("harvesters.length < 3");
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], undefined, {
-          role: 'harvester'
+      if (spawn.spawnCreep([WORK, CARRY, MOVE], "HARVESTER_" + Game.time, {
+          memory {
+            role: 'harvester'
+          },
         }) == OK) {
         console.log("creating harvester");
         Memory.count['harvester'] += 1;
@@ -98,8 +104,10 @@ module.exports = {
       }
     } else if (Memory.count.upgrader < 4) {
       console.log("upgraders.length < 4");
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], undefined, {
-          role: 'upgrader'
+      if (spawn.spawnCreep([WORK, CARRY, MOVE], "UPGRADER_" + Game.time, {
+          memory {
+            role: 'upgrader'
+          }
         }) == OK) {
         console.log("creating upgrader");
         Memory.count['upgrader'] += 1;
@@ -107,9 +115,11 @@ module.exports = {
         console.log("cannot create upgrader")
       }
     } else if (AT_WAR && Memory.count.warrior < 5) {
-      if (spawn.spawnCreep([TOUGH, MOVE, ATTACK], undefined, {
-          role: 'warrior',
-          class: 'melee'
+      if (spawn.spawnCreep([TOUGH, MOVE, ATTACK], "WARRIOR_" + Game.time, {
+          memory {
+            role: 'warrior',
+            class: 'melee'
+          }
         }) == OK) {
         Memory.count['warrior'] += 1;
       } else {
@@ -117,8 +127,10 @@ module.exports = {
       }
     } else {
       console.log("creating builder");
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], undefined, {
-          role: 'builder'
+      if (spawn.spawnCreep([WORK, CARRY, MOVE], "BUILDER_" + Game.time, {
+          memory {
+            role: 'builder'
+          }
         }) == OK) {
         Memory.count['builder'] += 1;
       } else {
