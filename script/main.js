@@ -1,3 +1,5 @@
+"use strict";
+
 var gameInfo = require('game.info');
 var gameLogic = require('game.logic');
 var roleHarvester = require('role.harvester');

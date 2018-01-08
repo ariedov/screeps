@@ -1,11 +1,5 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('game.logic');
- * mod.thing == 'a thing'; // true
- */
+"use strict";
+/*globals FIND_SOURCES, FIND_STRUCTURES, STRUCTURE_CONTAINER */
 
 const gameInfo = require('game.info');
 
@@ -22,7 +16,7 @@ module.exports = {
       });
       var containers = creep.room.find(FIND_STRUCTURES, {
         filter: function(s) {
-          return s.structureType == STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0
+          return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
         }
       });
       sources = sources.concat(containers);
@@ -63,60 +57,60 @@ module.exports = {
   },
 
   spawnCreeps: function() {
-    var spawn = Game.spawns["Spawn1"];
+    var spawn = Game.spawns.Spawn1;
 
     console.log("upgraders: " + Memory.count.upgrader + " harvesters: " + Memory.count.harvester + " rechargers: " + Memory.count.recharger + " warriors: " + Memory.count.warrior + " builders: " + Memory.count.builder);
     if (Memory.count.upgrader == 0) {
       console.log("upgraders.length == 0");
       if (spawn.spawnCreep([WORK, CARRY, MOVE], "UPGRADER_" + Game.time, {
-          memory {
+          memory: {
             role: 'upgrader'
           }
         }) == OK) {
         console.log("creating upgrader");
-        Memory.count['upgrader'] += 1;
+        Memory.count.upgrader += 1;
       } else {
-        console.log("cannot create upgrader")
+        console.log("cannot create upgrader");
       }
     } else if (Memory.count.recharger == 0) {
       console.log("rechargers.length == 0");
       if (spawn.spawnCreep([WORK, CARRY, MOVE], "RECHARGER_" + Game.time, {
-          memory {
+          memory: {
             role: 'recharger'
           }
         }) == OK) {
         console.log("creating recharger");
-        Memory.count['recharger'] += 1;
+        Memory.count.recharger += 1;
       } else {
-        console.log("cannot create recharger")
+        console.log("cannot create recharger");
       }
     } else if (Memory.count.harvester < 3) {
       console.log("harvesters.length < 3");
       if (spawn.spawnCreep([WORK, CARRY, MOVE], "HARVESTER_" + Game.time, {
-          memory {
+          memory: {
             role: 'harvester'
-          },
+          }
         }) == OK) {
         console.log("creating harvester");
-        Memory.count['harvester'] += 1;
+        Memory.count.harvester += 1;
       } else {
-        console.log("cannot create harvester")
+        console.log("cannot create harvester");
       }
     } else if (Memory.count.upgrader < 4) {
       console.log("upgraders.length < 4");
       if (spawn.spawnCreep([WORK, CARRY, MOVE], "UPGRADER_" + Game.time, {
-          memory {
+          memory: {
             role: 'upgrader'
           }
         }) == OK) {
         console.log("creating upgrader");
-        Memory.count['upgrader'] += 1;
+        Memory.count.upgrader += 1;
       } else {
-        console.log("cannot create upgrader")
+        console.log("cannot create upgrader");
       }
     } else if (AT_WAR && Memory.count.warrior < 5) {
       if (spawn.spawnCreep([TOUGH, MOVE, ATTACK], "WARRIOR_" + Game.time, {
-          memory {
+          memory: {
             role: 'warrior',
             class: 'melee'
           }
@@ -128,7 +122,7 @@ module.exports = {
     } else {
       console.log("creating builder");
       if (spawn.spawnCreep([WORK, CARRY, MOVE], "BUILDER_" + Game.time, {
-          memory {
+          memory: {
             role: 'builder'
           }
         }) == OK) {
