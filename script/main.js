@@ -1,12 +1,12 @@
 var gameInfo = require('game.info');
 var gameLogic = require('game.logic');
-var roleHarvester = require('roles/role.harvester');
-var roleUpgrader = require('roles/role.upgrader');
-var roleBuilder = require('roles/role.builder');
-var roleSeeker = require('roles/role.seeker');
-var roleRecharger = require('roles/role.recharger');
-var roleTower = require('roles/role.tower');
-var roleWarrior = require('roles/role.warrior');
+var roleHarvester = require('role.harvester');
+var roleUpgrader = require('role.upgrader');
+var roleBuilder = require('role.builder');
+var roleSeeker = require('role.seeker');
+var roleRecharger = require('role.recharger');
+var roleTower = require('role.tower');
+var roleWarrior = require('role.warrior');
 
 module.exports.loop = function() {
 
