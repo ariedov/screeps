@@ -1,6 +1,3 @@
-"use strict";
-/*globals FIND_SOURCES, FIND_STRUCTURES, STRUCTURE_CONTAINER */
-
 const gameInfo = require('game.info');
 
 const AT_WAR = false;

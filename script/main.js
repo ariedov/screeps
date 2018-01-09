@@ -1,35 +1,34 @@
-"use strict";
+const gameLogic = require('game.logic');
+const roleHarvester = require('role.harvester');
+const roleUpgrader = require('role.upgrader');
+const roleBuilder = require('role.builder');
+const roleSeeker = require('role.seeker');
+const roleRecharger = require('role.recharger');
+const roleTower = require('role.tower');
+const roleWarrior = require('role.warrior');
 
-var gameInfo = require('game.info');
-var gameLogic = require('game.logic');
-var roleHarvester = require('role.harvester');
-var roleUpgrader = require('role.upgrader');
-var roleBuilder = require('role.builder');
-var roleSeeker = require('role.seeker');
-var roleRecharger = require('role.recharger');
-var roleTower = require('role.tower');
-var roleWarrior = require('role.warrior');
+function clearExpiredCreeps(i) {
+  if (!Game.creeps[i]) {
+    let role = Memory.creeps[i].role;
+    Memory.count[role] -= 1;
+    delete Memory.creeps[i];
+  }
+}
 
 module.exports.loop = function() {
 
-  for (var i in Memory.creeps) {
-    if (!Game.creeps[i]) {
-      var role = Memory.creeps[i].role;
-      Memory.count[role] -= 1;
-      delete Memory.creeps[i];
-    }
-  }
+  Memory.creeps.forEach(clearExpiredCreeps);
 
-  var towers = Game.spawns["Spawn1"].room.find(
+  const towers = Game.spawns.Spawn1.room.find(
     FIND_MY_STRUCTURES, {
       filter: {
         structureType: STRUCTURE_TOWER
       }
     });
-  towers.forEach(tower => roleTower.run(tower));
+  towers.forEach((tower) => roleTower.run(tower));
 
-  for (var name in Game.creeps) {
-    var creep = Game.creeps[name];
+  Game.creeps.forEach(function(name, index, array) {
+    const creep = Game.creeps[name];
 
     if (creep.memory.role == 'warrior') {
       roleWarrior.run(creep);
@@ -62,7 +61,7 @@ module.exports.loop = function() {
     if (creep.memory.role == 'seeker') {
       roleSeeker.run(creep);
     }
-  }
+  });
 
   gameLogic.updateMemory();
   gameLogic.spawnCreeps();

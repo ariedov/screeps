@@ -9,10 +9,10 @@
 
 module.exports = {
 
-  getTotalEnergy: function() {
-    var totalEnergy = 0;
+  getTotalEnergy: function () {
+    let totalEnergy = 0;
 
-    for (var r in Game.rooms) {
+    for (const r in Game.rooms) {
       var room = Game.rooms[r];
       totalEnergy += this.getRoomEnergy(room);
     }
