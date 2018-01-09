@@ -1,8 +1,8 @@
-var logic = require("game.logic");
+const logic = require('./game.logic');
 
 module.exports = {
 
-  run: function(creep) {
+  run(creep) {
 
     if (!creep.memory.upgrading) {
       if (!logic.harvest(creep)) {

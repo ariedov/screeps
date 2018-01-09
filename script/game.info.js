@@ -9,54 +9,53 @@
 
 module.exports = {
 
-  getTotalEnergy: function () {
+  getTotalEnergy() {
     let totalEnergy = 0;
 
-    for (const r in Game.rooms) {
-      var room = Game.rooms[r];
+    Game.rooms.forEach(r => {
+      const room = Game.rooms[r];
       totalEnergy += this.getRoomEnergy(room);
-    }
-
+    });
     return totalEnergy;
   },
 
-  getRoomEnergy: function(room) {
-    return _.sum(room.find(FIND_MY_STRUCTURES), function(s) {
-      if (s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_SPAWN) {
-        return s.energy;
-      } else {
-        return 0;
+  getRoomEnergy(room) {
+    return _.sum(room.find(FIND_MY_STRUCTURES), s => {
+      let energy = 0;
+      if (s.structureType === STRUCTURE_EXTENSION || s.structureType === STRUCTURE_SPAWN) {
+        energy = s.energy;
       }
+      return energy;
     });
   },
 
-  getHarvesters: function() {
-    return _.filter(Game.creeps, function(c) {
-      return c.memory.role == 'harvester';
+  getHarvesters() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'harvester';
     });
   },
 
-  getUpgraders: function() {
-    return _.filter(Game.creeps, function(c) {
-      return c.memory.role == 'upgrader';
+  getUpgraders() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'upgrader';
     });
   },
 
-  getRechargers: function() {
-    return _.filter(Game.creeps, function(c) {
-      return c.memory.role == 'recharger';
+  getRechargers() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'recharger';
     });
   },
 
-  getBuilders: function() {
-    return _.filter(Game.creeps, function(c) {
-      return c.memory.role == 'builder';
+  getBuilders() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'builder';
     });
   },
 
-  getWarriors: function() {
-    return _.filter(Game.creeps, function(c) {
-      return c.memory.role == 'warrior';
+  getWarriors() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'warrior';
     });
   }
 };

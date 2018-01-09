@@ -1,16 +1,16 @@
 module.exports = {
 
-  run: function(tower) {
-    var enemies = tower.room.find(FIND_HOSTILE_CREEPS);
-    if (enemies.length) {
-      tower.attack(enemies[0]);
-    } else {
-      var creeps = _.filter(Game.creeps, function(c) {
-        return c.hits < c.hitsMax
+  run(tower) {
+    const enemies = tower.room.find(FIND_HOSTILE_CREEPS);
+    if (enemies.length === 0) {
+      const creeps = _.filter(Game.creeps, c => {
+        return c.hits < c.hitsMax;
       });
-      if (creeps.length) {
+      if (creeps.length !== 0) {
         tower.heal(creeps[0]);
       }
+    } else {
+      tower.attack(enemies[0]);
     }
   }
 };

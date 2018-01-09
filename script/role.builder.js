@@ -1,19 +1,18 @@
-var logic = require('game.logic');
+const logic = require('./game.logic');
 
 module.exports = {
 
-  run: function(creep) {
-
+  run(creep) {
     if (!creep.memory.building) {
       if (!logic.harvest(creep)) {
         creep.memory.building = true;
       }
-    } else if (creep.carry.energy == 0) {
+    } else if (creep.carry.energy === 0) {
       creep.memory.building = false;
     }
 
     if (creep.memory.building) {
-      var target = Game.getObjectById(creep.memory.target);
+      let target = Game.getObjectById(creep.memory.target);
       if (target) {
         if (target.structureType) {
           if (shouldBeRepaired(target)) {
@@ -29,53 +28,55 @@ module.exports = {
       }
 
       if (!creep.memory.target) {
-        var targets = creep.room.find(FIND_STRUCTURES, {
+        let targets = creep.room.find(FIND_STRUCTURES, {
           filter: shouldBeRepaired
         });
-        if (targets.length) {
-          target = creep.pos.findClosestByRange(targets);
-          creep.memory.target = target.id;
-          this.repair(creep, target);
-        } else {
+        if (targets.length === 0) {
           targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-          if (targets.length) {
+          if (targets.length !== 0) {
             target = creep.pos.findClosestByRange(targets);
             creep.memory.target = target.id;
             this.build(creep, target);
           }
+        } else {
+          target = creep.pos.findClosestByRange(targets);
+          creep.memory.target = target.id;
+          this.repair(creep, target);
         }
       }
     }
   },
 
-  isBusy: function(creep) {
-    var repair = creep.room.find(FIND_STRUCTURES, {
+  isBusy(creep) {
+    const repair = creep.room.find(FIND_STRUCTURES, {
       filter: shouldBeRepaired
     });
-    var build = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+    const build = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
     return creep.memory.target || repair.length || build.length;
   },
 
-  build: function(creep, s) {
-    if (creep.build(s) == ERR_NOT_IN_RANGE) {
+  build(creep, s) {
+    if (creep.build(s) === ERR_NOT_IN_RANGE) {
       creep.moveTo(s);
     }
   },
 
-  repair: function(creep, s) {
-    if (creep.repair(s) == ERR_NOT_IN_RANGE) {
+  repair(creep, s) {
+    if (creep.repair(s) === ERR_NOT_IN_RANGE) {
       creep.moveTo(s);
     }
   }
 };
 
 function shouldBeRepaired(s) {
-  if (s.structureType == STRUCTURE_WALL) {
-    return s.hits < s.hitsMax / 10000;
-  } else if (s.structureType == STRUCTURE_RAMPART) {
-    return s.hits < s.hitsMax / 4;
+  let shouldBeRepaired = false;
+  if (s.structureType === STRUCTURE_WALL) {
+    shouldBeRepaired = s.hits < s.hitsMax / 10000;
+  } else if (s.structureType === STRUCTURE_RAMPART) {
+    shouldBeRepaired = s.hits < s.hitsMax / 4;
   } else {
-    return s.hits < s.hitsMax / 2;
+    shouldBeRepaired = s.hits < s.hitsMax / 2;
   }
+  return shouldBeRepaired;
 }

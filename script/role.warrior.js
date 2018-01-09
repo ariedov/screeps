@@ -9,35 +9,35 @@
 
 module.exports = {
 
-  run: function(creep) {
-    var flag = Game.flags["RoomFlag"];
+  run(creep) {
+    const flag = Game.flags.RoomFlag;
 
-    var targets = creep.room.find(FIND_HOSTILE_CREEPS);
-    var target = creep.pos.findClosestByPath(targets);
+    let targets = creep.room.find(FIND_HOSTILE_CREEPS);
+    let target = creep.pos.findClosestByPath(targets);
     if (target) {
-      if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+      if (creep.attack(target) === ERR_NOT_IN_RANGE) {
         creep.moveTo(target);
       }
     } else {
       targets = creep.room.find(FIND_HOSTILE_STRUCTURES, {
-        filter: function(s) {
-          return s.structureType != STRUCTURE_CONTROLLER;
+        filter(s) {
+          return s.structureType !== STRUCTURE_CONTROLLER;
         }
       });
       target = creep.pos.findClosestByPath(targets);
       if (target) {
-        if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+        if (creep.attack(target) === ERR_NOT_IN_RANGE) {
           creep.moveTo(target);
         }
-      } else if (creep.room.name == "W29N81") {
+      } else if (creep.room.name === 'W29N81') {
         targets = creep.room.find(FIND_STRUCTURES, {
-          filter: function(s) {
-            return s.structureType == STRUCTURE_WALL;
+          filter(s) {
+            return s.structureType === STRUCTURE_WALL;
           }
         });
         target = creep.pos.findClosestByPath(targets);
         if (target) {
-          if (creep.attack(target) == ERR_NOT_IN_RANGE) {
+          if (creep.attack(target) === ERR_NOT_IN_RANGE) {
             creep.moveTo(target);
           }
         }
@@ -45,6 +45,5 @@ module.exports = {
         creep.moveTo(flag);
       }
     }
-
   }
 };

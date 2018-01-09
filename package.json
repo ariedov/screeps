@@ -23,6 +23,34 @@
   },
   "homepage": "https://github.com/ariedov/screeps#readme",
   "xo": {
-    "space": true
+    "space": true,
+    "globals": [
+      "FIND_STRUCTURES",
+      "FIND_MY_STRUCTURES",
+      "FIND_MY_CONSTRUCTION_SITES",
+      "FIND_HOSTILE_CREEPS",
+      "FIND_HOSTILE_CONSTRUCTION_SITES",
+      "FIND_HOSTILE_STRUCTURES",
+      "FIND_SOURCES",
+      "ERR_NOT_IN_RANGE",
+      "STRUCTURE_EXTENSION",
+      "STRUCTURE_SPAWN",
+      "STRUCTURE_CONTAINER",
+      "STRUCTURE_CONTROLLER",
+      "STRUCTURE_TOWER",
+      "STRUCTURE_WALL",
+      "STRUCTURE_RAMPART",
+      "RESOURCE_ENERGY",
+      "ERR_NOT_IN_RANGE",
+      "WORK",
+      "CARRY",
+      "MOVE",
+      "TOUGH",
+      "ATTACK",
+      "OK",
+      "Game",
+      "Memory",
+      "_"
+    ]
   }
 }
