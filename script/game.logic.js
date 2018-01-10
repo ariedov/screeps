@@ -1,3 +1,4 @@
+const logger = require('./logger');
 const gameInfo = require('./game.info');
 
 const AT_WAR = false;
@@ -60,7 +61,7 @@ module.exports = {
           role: 'recharger'
         }
       }) === OK) {
-        console.log('creating recharger');
+        logger.log('creating recharger');
         this.logCreeps();
         Memory.count.recharger += 1;
       }
@@ -70,7 +71,7 @@ module.exports = {
           role: 'upgrader'
         }
       }) === OK) {
-        console.log('creating upgrader');
+        logger.log('creating upgrader');
         this.logCreeps();
         Memory.count.upgrader += 1;
       }
@@ -80,7 +81,7 @@ module.exports = {
           role: 'harvester'
         }
       }) === OK) {
-        console.log('creating harvester');
+        logger.log('creating harvester');
         this.logCreeps();
         Memory.count.harvester += 1;
       }
@@ -90,7 +91,7 @@ module.exports = {
           role: 'upgrader'
         }
       }) === OK) {
-        console.log('creating upgrader');
+        logger.log('creating upgrader');
         this.logCreeps();
         Memory.count.upgrader += 1;
       }
@@ -101,7 +102,7 @@ module.exports = {
           class: 'melee'
         }
       }) === OK) {
-        console.log('creating warrior');
+        logger.log('creating warrior');
         this.logCreeps();
         Memory.count.warrior += 1;
       }
@@ -110,14 +111,14 @@ module.exports = {
         role: 'builder'
       }
     }) === OK) {
-      console.log('creating builder');
+      logger.log('creating builder');
       this.logCreeps();
       Memory.count.builder += 1;
     }
   },
 
   logCreeps() {
-    console.log('upgraders: ' + Memory.count.upgrader + ' harvesters: ' + Memory.count.harvester + ' rechargers: ' + Memory.count.recharger + ' warriors: ' + Memory.count.warrior + ' builders: ' + Memory.count.builder);
+    logger.log('upgraders: ' + Memory.count.upgrader + ' harvesters: ' + Memory.count.harvester + ' rechargers: ' + Memory.count.recharger + ' warriors: ' + Memory.count.warrior + ' builders: ' + Memory.count.builder);
   },
 
   updateMemory() {

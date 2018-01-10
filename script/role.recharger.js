@@ -3,17 +3,23 @@
  * Stores it in the tower or container
  */
 
+const logger = require('./logger');
 const logic = require('./game.logic');
 
 module.exports = {
 
   run(creep) {
-    if (!creep.memory.charging) {
+    const isCharging = creep.memory.charging;
+    if (!isCharging) {
       if (!logic.harvestClosestSource(creep)) {
         creep.memory.charging = true;
       }
     } else if (creep.carry.energy === 0) {
       creep.memory.charging = false;
+    }
+    if (isCharging !== creep.memory.charging) {
+      const message = creep.memory.charging ? 'now charging' : 'now feeding';
+      logger.logCreep(creep, message);
     }
 
     if (creep.memory.charging) {

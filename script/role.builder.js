@@ -1,14 +1,20 @@
+const logger = require('./logger');
 const logic = require('./game.logic');
 
 module.exports = {
 
   run(creep) {
-    if (!creep.memory.building) {
+    const isBuilding = creep.memory.building;
+    if (!isBuilding) {
       if (!logic.harvest(creep)) {
         creep.memory.building = true;
       }
     } else if (creep.carry.energy === 0) {
       creep.memory.building = false;
+    }
+    if (isBuilding !== creep.memory.building) {
+      const message = creep.memory.building ? 'now building' : 'now feeding';
+      logger.logCreep(creep, message);
     }
 
     if (creep.memory.building) {
