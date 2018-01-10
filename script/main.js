@@ -7,11 +7,11 @@ const roleRecharger = require('./role.recharger');
 const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 
-function clearExpiredCreeps(i) {
-  if (!Game.creeps[i]) {
-    const role = Memory.creeps[i].role;
+function clearExpiredCreeps(creep) {
+  if (!creep) {
+    const role = creep.memory.role;
     Memory.count[role] -= 1;
-    delete Memory.creeps[i];
+    delete Memory.creeps[creep.name];
   }
 }
 
@@ -26,9 +26,7 @@ module.exports.loop = function () {
     });
   _.each(towers, tower => roleTower.run(tower));
 
-  _.each(Game.creeps, name => {
-    const creep = Game.creeps[name];
-
+  _.each(Game.creeps, creep => {
     if (creep.memory.role === 'warrior') {
       roleWarrior.run(creep);
     }
