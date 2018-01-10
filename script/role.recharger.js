@@ -1,10 +1,15 @@
+/*
+ * Gets energy from closest source
+ * Stores it in the tower or container
+ */
+
 const logic = require('./game.logic');
 
 module.exports = {
 
   run(creep) {
     if (!creep.memory.charging) {
-      if (!logic.harvestSources(creep)) {
+      if (!logic.harvestClosestSource(creep)) {
         creep.memory.charging = true;
       }
     } else if (creep.carry.energy === 0) {

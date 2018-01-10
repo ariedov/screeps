@@ -1,10 +1,15 @@
+/*
+ * Gets energy from closest source
+ * Then stores it in the closest spawn or extension in the room
+ */
+
 const logic = require('./game.logic');
 
 module.exports = {
 
   run(creep) {
     if (!creep.memory.charging) {
-      if (!logic.harvestSources(creep)) {
+      if (!logic.harvestClosestSource(creep)) {
         creep.memory.charging = true;
       }
     } else if (creep.carry.energy === 0) {

@@ -7,7 +7,7 @@ const roleRecharger = require('./role.recharger');
 const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 
-function clearExpiredCreeps(creep) {
+function deleteIfExpired(creep) {
   if (!creep) {
     const role = creep.memory.role;
     Memory.count[role] -= 1;
@@ -16,7 +16,7 @@ function clearExpiredCreeps(creep) {
 }
 
 module.exports.loop = function () {
-  _.each(Memory.creeps, clearExpiredCreeps);
+  _.each(Memory.creeps, deleteIfExpired);
 
   const towers = Game.spawns.Spawn1.room.find(
     FIND_MY_STRUCTURES, {
