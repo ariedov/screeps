@@ -105,17 +105,14 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else {
-      console.log('creating builder');
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], 'BUILDER_' + Game.time, {
-        memory: {
-          role: 'builder'
-        }
-      }) === OK) {
-        console.log('creating builder');
-        this.logCreeps();
-        Memory.count.builder += 1;
+    } else if (spawn.spawnCreep([WORK, CARRY, MOVE], 'BUILDER_' + Game.time, {
+      memory: {
+        role: 'builder'
       }
+    }) === OK) {
+      console.log('creating builder');
+      this.logCreeps();
+      Memory.count.builder += 1;
     }
   },
 
