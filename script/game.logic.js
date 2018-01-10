@@ -65,7 +65,6 @@ module.exports = {
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      console.log('upgraders.length == 0');
       if (spawn.spawnCreep([WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
@@ -76,7 +75,6 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      console.log('harvesters.length < 3');
       if (spawn.spawnCreep([WORK, CARRY, MOVE], 'HARVESTER_' + Game.time, {
         memory: {
           role: 'harvester'
@@ -87,7 +85,6 @@ module.exports = {
         Memory.count.harvester += 1;
       }
     } else if (Memory.count.upgrader < 4) {
-      console.log('upgraders.length < 4');
       if (spawn.spawnCreep([WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
