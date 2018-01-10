@@ -54,15 +54,14 @@ module.exports = {
   spawnCreeps() {
     const spawn = Game.spawns.Spawn1;
 
-    console.log('upgraders: ' + Memory.count.upgrader + ' harvesters: ' + Memory.count.harvester + ' rechargers: ' + Memory.count.recharger + ' warriors: ' + Memory.count.warrior + ' builders: ' + Memory.count.builder);
     if (Memory.count.recharger === 0) {
-      console.log('rechargers.length == 0');
       if (spawn.spawnCreep([WORK, CARRY, MOVE], 'RECHARGER_' + Game.time, {
         memory: {
           role: 'recharger'
         }
       }) === OK) {
         console.log('creating recharger');
+        this.logCreeps();
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
@@ -73,6 +72,7 @@ module.exports = {
         }
       }) === OK) {
         console.log('creating upgrader');
+        this.logCreeps();
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
@@ -83,9 +83,8 @@ module.exports = {
         }
       }) === OK) {
         console.log('creating harvester');
+        this.logCreeps();
         Memory.count.harvester += 1;
-      } else {
-        console.log('cannot create harvester');
       }
     } else if (Memory.count.upgrader < 4) {
       console.log('upgraders.length < 4');
@@ -95,6 +94,7 @@ module.exports = {
         }
       }) === OK) {
         console.log('creating upgrader');
+        this.logCreeps();
         Memory.count.upgrader += 1;
       }
     } else if (AT_WAR && Memory.count.warrior < 5) {
@@ -104,6 +104,8 @@ module.exports = {
           class: 'melee'
         }
       }) === OK) {
+        console.log('creating warrior');
+        this.logCreeps();
         Memory.count.warrior += 1;
       }
     } else {
@@ -113,9 +115,15 @@ module.exports = {
           role: 'builder'
         }
       }) === OK) {
+        console.log('creating builder');
+        this.logCreeps();
         Memory.count.builder += 1;
       }
     }
+  },
+
+  logCreeps() {
+    console.log('upgraders: ' + Memory.count.upgrader + ' harvesters: ' + Memory.count.harvester + ' rechargers: ' + Memory.count.recharger + ' warriors: ' + Memory.count.warrior + ' builders: ' + Memory.count.builder);
   },
 
   updateMemory() {
