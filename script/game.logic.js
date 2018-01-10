@@ -6,6 +6,7 @@ const AT_WAR = false;
 module.exports = {
 
   harvest(creep) {
+    let shouldHarvest = false;
     if (creep.carry.energy < creep.carryCapacity) {
       let sources = creep.room.find(FIND_SOURCES, {
         filter(s) {
@@ -27,14 +28,14 @@ module.exports = {
         } else if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
           creep.moveTo(source);
         }
-        return true;
+        shouldHarvest = true;
       }
     }
-    return false;
+    return shouldHarvest;
   },
 
   harvestClosestSource(creep) {
-    let ableToHarvest = false;
+    let shouldHarvest = false;
     if (creep.carry.energy < creep.carryCapacity) {
       const sources = creep.room.find(FIND_SOURCES, {
         filter(s) {
@@ -47,9 +48,9 @@ module.exports = {
           creep.moveTo(source);
         }
       }
-      ableToHarvest = true;
+      shouldHarvest = true;
     }
-    return ableToHarvest;
+    return shouldHarvest;
   },
 
   spawnCreeps() {
@@ -66,7 +67,7 @@ module.exports = {
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -76,7 +77,7 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'HARVESTER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'HARVESTER_' + Game.time, {
         memory: {
           role: 'harvester'
         }
@@ -86,7 +87,7 @@ module.exports = {
         Memory.count.harvester += 1;
       }
     } else if (Memory.count.upgrader < 4) {
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -106,7 +107,7 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'BUILDER_' + Game.time, {
+    } else if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'BUILDER_' + Game.time, {
       memory: {
         role: 'builder'
       }
