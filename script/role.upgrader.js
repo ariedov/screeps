@@ -13,7 +13,7 @@ module.exports = {
     }
     if (upgrading !== creep.memory.upgrading) {
       const message = creep.memory.upgrading ? 'now upgrading' : 'now feeding';
-      logger.logCreep(message);
+      logger.logCreep(creep, message);
     }
 
     if (creep.memory.upgrading) {
