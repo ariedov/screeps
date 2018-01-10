@@ -56,7 +56,7 @@ module.exports = {
     const spawn = Game.spawns.Spawn1;
 
     if (Memory.count.recharger === 0) {
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], 'RECHARGER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'RECHARGER_' + Game.time, {
         memory: {
           role: 'recharger'
         }
@@ -66,7 +66,7 @@ module.exports = {
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -76,7 +76,7 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      if (spawn.spawnCreep([WORK, CARRY, MOVE], 'HARVESTER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'HARVESTER_' + Game.time, {
         memory: {
           role: 'harvester'
         }
@@ -96,7 +96,7 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (AT_WAR && Memory.count.warrior < 5) {
-      if (spawn.spawnCreep([TOUGH, MOVE, ATTACK], 'WARRIOR_' + Game.time, {
+      if (spawn.spawnCreep([TOUGH, TOUGH, TOUGH, MOVE, MOVE, MOVE, ATTACK, ATTACK, ATTACK], 'WARRIOR_' + Game.time, {
         memory: {
           role: 'warrior',
           class: 'melee'
@@ -106,7 +106,7 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (spawn.spawnCreep([WORK, CARRY, MOVE], 'BUILDER_' + Game.time, {
+    } else if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'BUILDER_' + Game.time, {
       memory: {
         role: 'builder'
       }
