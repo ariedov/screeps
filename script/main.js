@@ -16,7 +16,7 @@ function clearExpiredCreeps(i) {
 }
 
 module.exports.loop = function () {
-  Memory.creeps.forEach(clearExpiredCreeps);
+  _.each(Memory.creeps, clearExpiredCreeps);
 
   const towers = Game.spawns.Spawn1.room.find(
     FIND_MY_STRUCTURES, {
@@ -24,9 +24,9 @@ module.exports.loop = function () {
         structureType: STRUCTURE_TOWER
       }
     });
-  towers.forEach(tower => roleTower.run(tower));
+  _.each(towers, tower => roleTower.run(tower));
 
-  Game.creeps.forEach(name => {
+  _.each(Game.creeps, name => {
     const creep = Game.creeps[name];
 
     if (creep.memory.role === 'warrior') {

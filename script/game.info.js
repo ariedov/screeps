@@ -12,7 +12,7 @@ module.exports = {
   getTotalEnergy() {
     let totalEnergy = 0;
 
-    Game.rooms.forEach(r => {
+    _.each(Game.rooms, (r => {
       const room = Game.rooms[r];
       totalEnergy += this.getRoomEnergy(room);
     });
