@@ -20,13 +20,7 @@ module.exports = {
   },
 
   getRoomEnergy(room) {
-    return _.sum(room.find(FIND_MY_STRUCTURES), s => {
-      let energy = 0;
-      if (s.structureType === STRUCTURE_EXTENSION || s.structureType === STRUCTURE_SPAWN) {
-        energy = s.energy;
-      }
-      return energy;
-    });
+    return room.energyAvailable;
   },
 
   getHarvesters() {
