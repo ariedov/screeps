@@ -9,7 +9,7 @@ const roleWarrior = require('./role.warrior');
 const supervisor = require('./supervisor');
 
 function deleteIfExpired(creep) {
-  if (!creep) {
+  if (!Game.creeps[creep.name]) {
     const role = creep.memory.role;
     Memory.count[role] -= 1;
     delete Memory.creeps[creep.name];
