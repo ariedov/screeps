@@ -1,4 +1,5 @@
 const logger = require('./logger');
+const factory = require('./factory');
 const gameInfo = require('./game.info');
 
 const AT_WAR = false;
@@ -45,9 +46,10 @@ module.exports = {
 
   spawnCreeps() {
     const spawn = Game.spawns.Spawn1;
+    const roomEnergy = gameInfo.getRoomEnergy(spawn.room);
 
     if (Memory.count.recharger === 0) {
-      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE], 'RECHARGER_' + Game.time, {
+      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'RECHARGER_' + Game.time, {
         memory: {
           role: 'recharger'
         }
@@ -57,7 +59,7 @@ module.exports = {
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -67,7 +69,7 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'HARVESTER_' + Game.time, {
+      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'HARVESTER_' + Game.time, {
         memory: {
           role: 'harvester'
         }
@@ -77,7 +79,7 @@ module.exports = {
         Memory.count.harvester += 1;
       }
     } else if (Memory.count.upgrader < 4) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -97,7 +99,7 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (spawn.spawnCreep([WORK, CARRY, CARRY, MOVE], 'BUILDER_' + Game.time, {
+    } else if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'BUILDER_' + Game.time, {
       memory: {
         role: 'builder'
       }

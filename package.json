@@ -42,6 +42,7 @@
       "STRUCTURE_RAMPART",
       "RESOURCE_ENERGY",
       "ERR_NOT_IN_RANGE",
+      "BODYPART_COST",
       "WORK",
       "CARRY",
       "MOVE",
