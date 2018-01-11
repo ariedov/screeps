@@ -6,58 +6,48 @@ const AT_WAR = false;
 module.exports = {
 
   harvest(creep) {
-    let shouldHarvest = false;
-    if (creep.carry.energy < creep.carryCapacity) {
-      let sources = creep.room.find(FIND_SOURCES, {
-        filter(s) {
-          return s.energy > 0;
-        }
-      });
-      const containers = creep.room.find(FIND_STRUCTURES, {
-        filter(s) {
-          return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
-        }
-      });
-      sources = sources.concat(containers);
-      const source = creep.pos.findClosestByPath(sources);
-      if (source) {
-        if (source.energy) {
-          if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(source);
-          }
-        } else if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source);
-        }
-        shouldHarvest = true;
+    let sources = creep.room.find(FIND_SOURCES, {
+      filter(s) {
+        return s.energy > 0;
       }
-    }
-    return shouldHarvest;
-  },
-
-  harvestClosestSource(creep) {
-    let shouldHarvest = false;
-    if (creep.carry.energy < creep.carryCapacity) {
-      const sources = creep.room.find(FIND_SOURCES, {
-        filter(s) {
-          return s.energy > 0;
-        }
-      });
-      const source = creep.pos.findClosestByPath(sources);
-      if (source && source.energy) {
+    });
+    const containers = creep.room.find(FIND_STRUCTURES, {
+      filter(s) {
+        return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
+      }
+    });
+    sources = sources.concat(containers);
+    const source = creep.pos.findClosestByPath(sources);
+    if (source) {
+      if (source.energy) {
         if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
           creep.moveTo(source);
         }
+      } else if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(source);
       }
-      shouldHarvest = true;
     }
-    return shouldHarvest;
+  },
+
+  harvestClosestSource(creep) {
+    const sources = creep.room.find(FIND_SOURCES, {
+      filter(s) {
+        return s.energy > 0;
+      }
+    });
+    const source = creep.pos.findClosestByPath(sources);
+    if (source && source.energy) {
+      if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(source);
+      }
+    }
   },
 
   spawnCreeps() {
     const spawn = Game.spawns.Spawn1;
 
     if (Memory.count.recharger === 0) {
-      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], 'RECHARGER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, WORK, CARRY, MOVE], 'RECHARGER_' + Game.time, {
         memory: {
           role: 'recharger'
         }
@@ -67,7 +57,7 @@ module.exports = {
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -77,7 +67,7 @@ module.exports = {
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'HARVESTER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'HARVESTER_' + Game.time, {
         memory: {
           role: 'harvester'
         }
@@ -87,7 +77,7 @@ module.exports = {
         Memory.count.harvester += 1;
       }
     } else if (Memory.count.upgrader < 4) {
-      if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'UPGRADER_' + Game.time, {
+      if (spawn.spawnCreep([WORK, WORK, CARRY, MOVE], 'UPGRADER_' + Game.time, {
         memory: {
           role: 'upgrader'
         }
@@ -107,7 +97,7 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (spawn.spawnCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], 'BUILDER_' + Game.time, {
+    } else if (spawn.spawnCreep([WORK, CARRY, CARRY, MOVE], 'BUILDER_' + Game.time, {
       memory: {
         role: 'builder'
       }

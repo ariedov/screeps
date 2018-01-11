@@ -1,54 +1,36 @@
-const logger = require('./logger');
-const logic = require('./game.logic');
-
 module.exports = {
 
   run(creep) {
-    const isBuilding = creep.memory.building;
-    if (!isBuilding) {
-      if (!logic.harvest(creep)) {
-        creep.memory.building = true;
+    let target = Game.getObjectById(creep.memory.target);
+    if (target) {
+      if (target.structureType) {
+        if (shouldBeRepaired(target)) {
+          this.repair(creep, target);
+        } else {
+          creep.memory.target = undefined;
+        }
+      } else {
+        this.build(creep, target);
       }
-    } else if (creep.carry.energy === 0) {
-      creep.memory.building = false;
-    }
-    if (isBuilding !== creep.memory.building) {
-      const message = creep.memory.building ? 'now building' : 'now feeding';
-      logger.logCreep(creep, message);
+    } else {
+      creep.memory.target = undefined;
     }
 
-    if (creep.memory.building) {
-      let target = Game.getObjectById(creep.memory.target);
-      if (target) {
-        if (target.structureType) {
-          if (shouldBeRepaired(target)) {
-            this.repair(creep, target);
-          } else {
-            creep.memory.target = undefined;
-          }
-        } else {
+    if (!creep.memory.target) {
+      let targets = creep.room.find(FIND_STRUCTURES, {
+        filter: shouldBeRepaired
+      });
+      if (targets.length === 0) {
+        targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
+        if (targets.length !== 0) {
+          target = creep.pos.findClosestByRange(targets);
+          creep.memory.target = target.id;
           this.build(creep, target);
         }
       } else {
-        creep.memory.target = undefined;
-      }
-
-      if (!creep.memory.target) {
-        let targets = creep.room.find(FIND_STRUCTURES, {
-          filter: shouldBeRepaired
-        });
-        if (targets.length === 0) {
-          targets = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
-          if (targets.length !== 0) {
-            target = creep.pos.findClosestByRange(targets);
-            creep.memory.target = target.id;
-            this.build(creep, target);
-          }
-        } else {
-          target = creep.pos.findClosestByRange(targets);
-          creep.memory.target = target.id;
-          this.repair(creep, target);
-        }
+        target = creep.pos.findClosestByRange(targets);
+        creep.memory.target = target.id;
+        this.repair(creep, target);
       }
     }
   },

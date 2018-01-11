@@ -1,47 +1,28 @@
 /*
- * Gets energy from closest source
- * Stores it in the tower or container
+ * Stores energy in the tower or container
  */
-
-const logger = require('./logger');
-const logic = require('./game.logic');
 
 module.exports = {
 
   run(creep) {
-    const isCharging = creep.memory.charging;
-    if (!isCharging) {
-      if (!logic.harvestClosestSource(creep)) {
-        creep.memory.charging = true;
+    const towers = creep.room.find(FIND_STRUCTURES, {
+      filter(s) {
+        return s.structureType === STRUCTURE_TOWER && s.energy < s.energyCapacity;
       }
-    } else if (creep.carry.energy === 0) {
-      creep.memory.charging = false;
-    }
-    if (isCharging !== creep.memory.charging) {
-      const message = creep.memory.charging ? 'now charging' : 'now feeding';
-      logger.logCreep(creep, message);
-    }
+    });
+    const containers = creep.room.find(FIND_STRUCTURES, {
+      filter(s) {
+        return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < s.storeCapacity;
+      }
+    });
 
-    if (creep.memory.charging) {
-      const towers = creep.room.find(FIND_STRUCTURES, {
-        filter(s) {
-          return s.structureType === STRUCTURE_TOWER && s.energy < s.energyCapacity;
-        }
-      });
-      const containers = creep.room.find(FIND_STRUCTURES, {
-        filter(s) {
-          return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < s.storeCapacity;
-        }
-      });
-
-      if (towers.length !== 0) {
-        if (creep.transfer(towers[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(towers[0]);
-        }
-      } else if (containers.length !== 0) {
-        if (creep.transfer(containers[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(containers[0]);
-        }
+    if (towers.length !== 0) {
+      if (creep.transfer(towers[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(towers[0]);
+      }
+    } else if (containers.length !== 0) {
+      if (creep.transfer(containers[0], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
+        creep.moveTo(containers[0]);
       }
     }
   },
