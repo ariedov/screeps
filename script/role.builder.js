@@ -5,12 +5,12 @@ module.exports = {
     if (target) {
       if (target.structureType) {
         if (shouldBeRepaired(target)) {
-          this.repair(creep, target);
+          repair(creep, target);
         } else {
           creep.memory.target = undefined;
         }
       } else {
-        this.build(creep, target);
+        build(creep, target);
       }
     } else {
       creep.memory.target = undefined;
@@ -25,12 +25,12 @@ module.exports = {
         if (targets.length !== 0) {
           target = creep.pos.findClosestByRange(targets);
           creep.memory.target = target.id;
-          this.build(creep, target);
+          build(creep, target);
         }
       } else {
         target = creep.pos.findClosestByRange(targets);
         creep.memory.target = target.id;
-        this.repair(creep, target);
+        repair(creep, target);
       }
     }
   },
@@ -42,20 +42,20 @@ module.exports = {
     const build = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
     return creep.memory.target || repair.length || build.length;
-  },
-
-  build(creep, s) {
-    if (creep.build(s) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(s);
-    }
-  },
-
-  repair(creep, s) {
-    if (creep.repair(s) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(s);
-    }
   }
 };
+
+function build(creep, s) {
+  if (creep.build(s) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(s);
+  }
+}
+
+function repair(creep, s) {
+  if (creep.repair(s) === ERR_NOT_IN_RANGE) {
+    creep.moveTo(s);
+  }
+}
 
 function shouldBeRepaired(s) {
   let shouldBeRepaired = false;
