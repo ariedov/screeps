@@ -49,41 +49,25 @@ module.exports = {
     const roomEnergy = gameInfo.getRoomEnergy(spawn.room);
 
     if (Memory.count.recharger === 0) {
-      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'RECHARGER_' + Game.time, {
-        memory: {
-          role: 'recharger'
-        }
-      }) === OK) {
+      if (factory.createWorker(spawn, roomEnergy, 'recharger') === OK) {
         logger.log('creating recharger');
         this.logCreeps();
         Memory.count.recharger += 1;
       }
     } else if (Memory.count.upgrader === 0) {
-      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'UPGRADER_' + Game.time, {
-        memory: {
-          role: 'upgrader'
-        }
-      }) === OK) {
+      if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
         logger.log('creating upgrader');
         this.logCreeps();
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < 3) {
-      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'HARVESTER_' + Game.time, {
-        memory: {
-          role: 'harvester'
-        }
-      }) === OK) {
+      if (factory.createWorker(spawn, roomEnergy, 'harvester') === OK) {
         logger.log('creating harvester');
         this.logCreeps();
         Memory.count.harvester += 1;
       }
     } else if (Memory.count.upgrader < 4) {
-      if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'UPGRADER_' + Game.time, {
-        memory: {
-          role: 'upgrader'
-        }
-      }) === OK) {
+      if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
         logger.log('creating upgrader');
         this.logCreeps();
         Memory.count.upgrader += 1;
@@ -99,11 +83,7 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (spawn.spawnCreep(factory.getWorkerBodyparts(roomEnergy), 'BUILDER_' + Game.time, {
-      memory: {
-        role: 'builder'
-      }
-    }) === OK) {
+    } else if (factory.createWorker(spawn, roomEnergy, 'builder') === OK) {
       logger.log('creating builder');
       this.logCreeps();
       Memory.count.builder += 1;
