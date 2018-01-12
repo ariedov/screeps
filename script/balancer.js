@@ -39,6 +39,7 @@ function findClosestAvailableSource(creep) {
     }
   });
 
+  let distance = 10000;
   let result;
   _.each(sources, s => {
     if (Memory.sources === undefined) {
@@ -50,7 +51,9 @@ function findClosestAvailableSource(creep) {
       };
     }
 
-    if (Memory.sources[s.id].feedsCount < creepsForSource) {
+    const rangeTo = creep.pos.getRangeTo(s);
+    if (Memory.sources[s.id].feedsCount < creepsForSource && rangeTo < distance) {
+      distance = rangeTo;
       result = s;
     }
   });
