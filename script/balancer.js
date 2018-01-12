@@ -9,13 +9,7 @@ module.exports = {
 
   assignToSource(creep) {
     const availableSource = findClosestAvailableSource(creep);
-    let source = Memory.sources[availableSource.id];
-    if (source === undefined) {
-      Memory.sources[availableSource.id] = {
-        feedsCount: 0
-      };
-      source = Memory.sources[availableSource.id];
-    }
+    const source = Memory.sources[availableSource.id];
     source.feedsCount += 1;
     creep.memory.feedsFrom = availableSource.id;
     logger.logCreep(creep, 'feeds from ' + availableSource.id);
@@ -46,6 +40,12 @@ function findClosestAvailableSource(creep) {
   });
 
   for (const s in sources) {
+    if (Memory.sources[s.id] === undefined) {
+      Memory.sources[s.id] = {
+        feedsCount: 0
+      };
+    }
+
     if (Memory.sources[s.id].feedsCount < creepsForSource) {
       return s;
     }
