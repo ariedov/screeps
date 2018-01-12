@@ -9,10 +9,17 @@ module.exports = {
 
   assignToSource(creep) {
     const availableSource = findClosestAvailableSource(creep);
-    Memory.sources[availableSource.id].feedsCount += 1;
+    let source = Memory.sources[availableSource.id];
+    if (source === undefined) {
+      Memory.sources[availableSource.id] = {
+        feedsCount: 0
+      };
+      source = Memory.sources[availableSource.id];
+    }
+    source.feedsCount += 1;
     creep.memory.feedsFrom = availableSource.id;
     logger.logCreep(creep, 'feeds from ' + availableSource.id);
-    logger.log(availableSource.id + ' is now feeding ' + Memory.sources[availableSource.id].feedsCount + ' creeps');
+    logger.log(availableSource.id + ' is now feeding ' + source.feedsCount + ' creeps');
     return availableSource;
   },
 
@@ -46,7 +53,7 @@ function findClosestAvailableSource(creep) {
 }
 
 // Code for harvesting from containers
-// 
+//
 // let sources = creep.room.find(FIND_SOURCES, {
 //   filter(s) {
 //     return s.energy > 0;
