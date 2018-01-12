@@ -8,6 +8,7 @@ const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 const supervisor = require('./supervisor');
 const balancer = require('./balancer');
+const planner = require('./planner');
 
 function deleteIfExpired(creep) {
   if (!Game.creeps[creep.name]) {
@@ -20,6 +21,7 @@ function deleteIfExpired(creep) {
 
 module.exports.loop = function () {
   _.each(Memory.creeps, deleteIfExpired);
+  planner.placeConstructionSites();
 
   const towers = Game.spawns.Spawn1.room.find(
     FIND_MY_STRUCTURES, {
