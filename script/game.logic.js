@@ -1,46 +1,16 @@
 const logger = require('./logger');
 const factory = require('./factory');
 const gameInfo = require('./game.info');
+const balancer = require('./balancer');
 
 const AT_WAR = false;
 
 module.exports = {
 
   harvest(creep) {
-    let sources = creep.room.find(FIND_SOURCES, {
-      filter(s) {
-        return s.energy > 0;
-      }
-    });
-    const containers = creep.room.find(FIND_STRUCTURES, {
-      filter(s) {
-        return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
-      }
-    });
-    sources = sources.concat(containers);
-    const source = creep.pos.findClosestByPath(sources);
-    if (source) {
-      if (source.energy) {
-        if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-          creep.moveTo(source);
-        }
-      } else if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source);
-      }
-    }
-  },
-
-  harvestClosestSource(creep) {
-    const sources = creep.room.find(FIND_SOURCES, {
-      filter(s) {
-        return s.energy > 0;
-      }
-    });
-    const source = creep.pos.findClosestByPath(sources);
-    if (source && source.energy) {
-      if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source);
-      }
+    const source = balancer.getSourceForCreep(creep);
+    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(source);
     }
   },
 

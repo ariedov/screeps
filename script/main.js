@@ -7,9 +7,11 @@ const roleRecharger = require('./role.recharger');
 const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 const supervisor = require('./supervisor');
+const balancer = require('./balancer');
 
 function deleteIfExpired(creep) {
   if (!Game.creeps[creep.name]) {
+    balancer.clearSource(creep);
     const role = Memory.creeps[creep.name].role;
     Memory.count[role] -= 1;
     delete Memory.creeps[creep.name];
@@ -33,12 +35,12 @@ module.exports.loop = function () {
     }
 
     if (creep.memory.role === 'harvester') {
-      supervisor.supervise(creep, gameLogic.harvestClosestSource, roleHarvester.run);
+      supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
     }
 
     if (creep.memory.role === 'recharger') {
       if (roleRecharger.isBusy(creep)) {
-        supervisor.supervise(creep, gameLogic.harvestClosestSource, roleRecharger.run);
+        supervisor.supervise(creep, gameLogic.harvest, roleRecharger.run);
       } else {
         supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
       }
