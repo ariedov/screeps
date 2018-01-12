@@ -39,7 +39,11 @@ function findClosestAvailableSource(creep) {
     }
   });
 
-  for (const s in sources) {
+  let result;
+  _.each(sources, s => {
+    if (Memory.sources === undefined) {
+      Memory.sources = {};
+    }
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {
         feedsCount: 0
@@ -47,9 +51,10 @@ function findClosestAvailableSource(creep) {
     }
 
     if (Memory.sources[s.id].feedsCount < creepsForSource) {
-      return s;
+      result = s;
     }
-  }
+  });
+  return result;
 }
 
 // Code for harvesting from containers
