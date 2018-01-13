@@ -53,10 +53,12 @@ module.exports = {
         this.logCreeps();
         Memory.count.warrior += 1;
       }
-    } else if (factory.createWorker(spawn, roomEnergy, 'builder') === OK) {
-      logger.log('creating builder');
-      this.logCreeps();
-      Memory.count.builder += 1;
+    } else if (Memory.count.builder < 8) {
+      if (factory.createWorker(spawn, roomEnergy, 'builder') === OK) {
+        logger.log('creating builder');
+        this.logCreeps();
+        Memory.count.builder += 1;
+      }
     }
   },
 
