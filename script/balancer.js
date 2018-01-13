@@ -18,9 +18,11 @@ module.exports = {
   },
 
   clearSource(creep) {
-    const feedsFrom = creep.memory.feedsFrom;
-    Memory.sources[feedsFrom].feedsCount -= 1;
-    logger.log(feedsFrom + ' is now feeding ' + Memory.sources[feedsFrom].feedsCount + ' creeps');
+    const feedsFrom = Memory.creeps[creep.name].feedsFrom;
+    if (feedsFrom) {
+      Memory.sources[feedsFrom].feedsCount -= 1;
+      logger.log(feedsFrom + ' is now feeding ' + Memory.sources[feedsFrom].feedsCount + ' creeps');
+    }
   },
 
   getSourceForCreep(creep) {
