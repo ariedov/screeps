@@ -3,6 +3,7 @@
  * TODO: implement container withdrawal
  */
 
+const gameInfo = require('./game.info');
 const logger = require('./logger');
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
     if (feedsFrom) {
       Memory.sources[feedsFrom].feedsCount -= 1;
       logger.log(feedsFrom + ' is now feeding ' + Memory.sources[feedsFrom].feedsCount + ' creeps');
+      delete Memory.creeps[creep.name].feedsFrom;
     }
   },
 
@@ -43,7 +45,7 @@ function findClosestAvailableSource(creep) {
   let result;
   _.each(sources, s => {
     if (Memory.sources === undefined) {
-      Memory.sources = {};
+      Memory.sources = gameInfo.getSourcesFeedingCreeps();
     }
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {

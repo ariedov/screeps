@@ -51,5 +51,19 @@ module.exports = {
     return _.filter(Game.creeps, c => {
       return c.memory.role === 'warrior';
     });
+  },
+
+  getSourcesFeedingCreeps() {
+    const sources = {};
+    _.each(Game.creeps, c => {
+      const feedsFrom = c.memory.feedsFrom;
+      if (sources[feedsFrom] === undefined) {
+        sources[feedsFrom] = {
+          feedsCount: 0
+        };
+      }
+      sources[feedsFrom].feedsCount += 1;
+    });
+    return sources;
   }
 };
