@@ -10,11 +10,13 @@ module.exports = {
 
   assignToSource(creep) {
     const availableSource = findClosestAvailableSource(creep);
-    const source = Memory.sources[availableSource.id];
-    source.feedsCount += 1;
-    creep.memory.feedsFrom = availableSource.id;
-    logger.logCreep(creep, 'feeds from ' + availableSource.id);
-    logger.log(availableSource.id + ' is now feeding ' + source.feedsCount + ' creeps');
+    if (availableSource !== undefined) {
+      const source = Memory.sources[availableSource.id];
+      source.feedsCount += 1;
+      creep.memory.feedsFrom = availableSource.id;
+      logger.logCreep(creep, 'feeds from ' + availableSource.id);
+      logger.log(availableSource.id + ' is now feeding ' + source.feedsCount + ' creeps');
+    }
     return availableSource;
   },
 
@@ -35,31 +37,29 @@ module.exports = {
 const creepsForSource = 10;
 
 function findClosestAvailableSource(creep) {
-  const sources = creep.room.find(FIND_SOURCES, {
+  let sources = creep.room.find(FIND_SOURCES, {
     filter(s) {
       return s.energy > 0;
     }
   });
 
-  let distance = 10000;
-  let result;
-  _.each(sources, s => {
-    if (Memory.sources === undefined) {
-      Memory.sources = gameInfo.getSourcesFeedingCreeps();
-    }
+  sources = _.sortBy(sources, s => {
+    return creep.pos.getRangeTo(s);
+  });
+
+  if (Memory.sources === undefined) {
+    Memory.sources = gameInfo.getSourcesFeedingCreeps();
+  }
+
+  return _.find(sources, s => {
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {
         feedsCount: 0
       };
     }
 
-    const rangeTo = creep.pos.getRangeTo(s);
-    if (Memory.sources[s.id].feedsCount < creepsForSource && rangeTo < distance) {
-      distance = rangeTo;
-      result = s;
-    }
+    return Memory.sources[s.id].feedsCount < creepsForSource;
   });
-  return result;
 }
 
 // Code for harvesting from containers
