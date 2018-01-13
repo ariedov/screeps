@@ -32,7 +32,7 @@ module.exports = {
   }
 };
 
-const creepsForSource = 4;
+const creepsForSource = 10;
 
 function findClosestAvailableSource(creep) {
   const sources = creep.room.find(FIND_SOURCES, {
