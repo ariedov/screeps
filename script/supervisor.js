@@ -5,7 +5,8 @@ module.exports = {
   supervise(creep, feed, work) {
     const working = creep.memory.working || creep.memory.working === undefined;
     if (working && creep.carry.energy === 0) {
-      if (balancer.assignToSource(creep, creep.memory.role === 'recharger') !== undefined) {
+      const sourceOnly = creep.memory.role === 'recharger' || creep.memory.role === 'chuck';
+      if (balancer.assignToSource(creep, sourceOnly) !== undefined) {
         creep.memory.working = false;
         logger.logCreep(creep, 'now feeding');
       }
