@@ -51,7 +51,7 @@ function findClosestAvailableSource(creep) {
     Memory.sources = gameInfo.getSourcesFeedingCreeps();
   }
 
-  return _.find(sources, s => {
+  let result = _.find(sources, s => {
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {
         feedsCount: 0
@@ -60,6 +60,11 @@ function findClosestAvailableSource(creep) {
 
     return Memory.sources[s.id].feedsCount < creepsForSource;
   });
+
+  if (result === undefined) {
+    result = sources[0];
+  }
+  return result;
 }
 
 // Code for harvesting from containers
