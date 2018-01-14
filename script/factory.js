@@ -4,13 +4,16 @@ module.exports = {
   createWorker(spawn, roomEnergy = 0, role = '') {
     const name = role.toUpperCase() + '_' + Game.time;
     const body = getWorkerBodyparts(roomEnergy);
-    logger.log('creep: ' + name + ' created with body ' + body + '. energy:' + roomEnergy);
-    return spawn.spawnCreep(body, name, {
+    const result = spawn.spawnCreep(body, name, {
       memory: {
         name,
         role
       }
     });
+    if (result === OK) {
+      logger.log('creep: ' + name + ' created with body ' + body + '. energy:' + roomEnergy);
+    }
+    return result;
   }
 };
 
