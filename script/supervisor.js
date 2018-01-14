@@ -1,11 +1,11 @@
 const logger = require('./logger');
 const balancer = require('./balancer');
+const gameLogic = require('./game.logic');
 
 module.exports = {
-  supervise(creep, feed, work) {
+  supervise(creep, work, sourceOnly = false) {
     const working = creep.memory.working || creep.memory.working === undefined;
     if (working && creep.carry.energy === 0) {
-      const sourceOnly = creep.memory.role === 'recharger' || creep.memory.role === 'chuck';
       if (balancer.assignToSource(creep, sourceOnly) !== undefined) {
         creep.memory.working = false;
         logger.logCreep(creep, 'now feeding');
@@ -20,7 +20,7 @@ module.exports = {
     if (creep.memory.working) {
       work(creep);
     } else {
-      feed(creep);
+      gameLogic.harvest(creep);
     }
   }
 };

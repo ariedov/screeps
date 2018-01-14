@@ -38,36 +38,36 @@ module.exports.loop = function () {
     }
 
     if (creep.memory.role === 'harvester') {
-      supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
+      supervisor.supervise(creep, roleHarvester.run);
     }
 
     if (creep.memory.role === 'recharger') {
       if (roleRecharger.isBusy(creep)) {
-        supervisor.supervise(creep, gameLogic.harvest, roleRecharger.run);
+        supervisor.supervise(creep, roleRecharger.run, true);
       } else {
-        supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
+        supervisor.supervise(creep, roleHarvester.run);
       }
     }
 
     if (creep.memory.role === 'chuck') {
       if (roleChuck.isBusy(creep)) {
-        supervisor.supervise(creep, gameLogic.harvest, roleChuck.run);
+        supervisor.supervise(creep, roleChuck.run);
       } else if (roleRecharger.isBusy(creep)) {
-        supervisor.supervise(creep, gameLogic.harvest, roleRecharger.run);
+        supervisor.supervise(creep, roleRecharger.run, true);
       } else {
-        supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
+        supervisor.supervise(creep, roleHarvester.run);
       }
     }
 
     if (creep.memory.role === 'upgrader') {
-      supervisor.supervise(creep, gameLogic.harvest, roleUpgrader.run);
+      supervisor.supervise(creep, roleUpgrader.run);
     }
 
     if (creep.memory.role === 'builder') {
       if (roleBuilder.isBusy(creep)) {
-        supervisor.supervise(creep, gameLogic.harvest, roleBuilder.run);
+        supervisor.supervise(creep, roleBuilder.run);
       } else {
-        supervisor.supervise(creep, gameLogic.harvest, roleUpgrader.run);
+        supervisor.supervise(creep, roleUpgrader.run);
       }
     }
 
