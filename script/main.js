@@ -4,6 +4,7 @@ const roleUpgrader = require('./role.upgrader');
 const roleBuilder = require('./role.builder');
 const roleSeeker = require('./role.seeker');
 const roleRecharger = require('./role.recharger');
+const roleChuck = require('./role.chuck');
 const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 const supervisor = require('./supervisor');
@@ -42,6 +43,16 @@ module.exports.loop = function () {
 
     if (creep.memory.role === 'recharger') {
       if (roleRecharger.isBusy(creep)) {
+        supervisor.supervise(creep, gameLogic.harvest, roleRecharger.run);
+      } else {
+        supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);
+      }
+    }
+
+    if (creep.memory.role === 'chuck') {
+      if (roleChuck.isBusy(creep)) {
+        supervisor.supervise(creep, gameLogic.harvest, roleChuck.run);
+      } else if (roleRecharger.isBusy(creep)) {
         supervisor.supervise(creep, gameLogic.harvest, roleRecharger.run);
       } else {
         supervisor.supervise(creep, gameLogic.harvest, roleHarvester.run);

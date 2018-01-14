@@ -5,11 +5,6 @@
 module.exports = {
 
   run(creep) {
-    const towers = creep.room.find(FIND_STRUCTURES, {
-      filter(s) {
-        return s.structureType === STRUCTURE_TOWER && s.energy < s.energyCapacity;
-      }
-    });
     const containers = creep.room.find(FIND_STRUCTURES, {
       filter(s) {
         return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] < s.storeCapacity;
