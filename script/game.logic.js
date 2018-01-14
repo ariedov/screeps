@@ -28,6 +28,10 @@ module.exports = {
       Memory.count.recharger = gameInfo.getRechargers().length;
     }
 
+    if (!Memory.count.chuck) {
+      Memory.count.chuck = gameInfo.getChucks().length;
+    }
+
     if (!Memory.count.upgrader) {
       Memory.count.upgrader = gameInfo.getUpgraders().length;
     }

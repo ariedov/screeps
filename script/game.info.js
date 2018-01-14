@@ -41,6 +41,12 @@ module.exports = {
     });
   },
 
+  getChucks() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'chuck';
+    });
+  },
+
   getBuilders() {
     return _.filter(Game.creeps, c => {
       return c.memory.role === 'builder';
