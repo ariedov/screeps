@@ -19,7 +19,7 @@ module.exports = {
     if (creep.memory.working) {
       work(creep);
     } else {
-      feed(creep);
+      feed(creep, creep.memory.role === 'recharger');
     }
   }
 };

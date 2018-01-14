@@ -7,8 +7,8 @@ const logger = require('./logger');
 
 module.exports = {
 
-  assignToSource(creep) {
-    const availableSource = findClosestAvailableSource(creep);
+  assignToSource(creep, sourceOnly = false) {
+    const availableSource = findClosestAvailableSource(creep, sourceOnly);
     if (availableSource !== undefined) {
       const source = Memory.sources[availableSource.id];
       source.feedsCount += 1;
@@ -35,18 +35,20 @@ module.exports = {
 
 const creepsForSource = 5;
 
-function findClosestAvailableSource(creep) {
+function findClosestAvailableSource(creep, sourceOnly = false) {
   let sources = creep.room.find(FIND_SOURCES, {
     filter(s) {
       return s.energy > 0;
     }
   });
 
-  sources = sources.concat(creep.room.find(FIND_STRUCTURES, {
-    filter(s) {
-      return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
-    }
-  }));
+  if (!sourceOnly) {
+    sources = sources.concat(creep.room.find(FIND_STRUCTURES, {
+      filter(s) {
+        return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
+      }
+    }));
+  }
 
   sources = _.sortBy(sources, s => {
     return creep.pos.getRangeTo(s);
