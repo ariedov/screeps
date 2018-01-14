@@ -1,6 +1,5 @@
 /*
  * Chooses the available source or container to withdaw energy from
- * TODO: implement container withdrawal
  */
 
 const gameInfo = require('./game.info');
@@ -42,6 +41,12 @@ function findClosestAvailableSource(creep) {
       return s.energy > 0;
     }
   });
+
+  sources = sources.concat(creep.room.find(FIND_STRUCTURES, {
+    filter(s) {
+      return s.structureType === STRUCTURE_CONTAINER && s.store[RESOURCE_ENERGY] > 0;
+    }
+  }));
 
   sources = _.sortBy(sources, s => {
     return creep.pos.getRangeTo(s);
