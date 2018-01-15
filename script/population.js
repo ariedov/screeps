@@ -23,7 +23,7 @@ module.exports = {
     } else if (Memory.count.upgrader === 0) {
       if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
         logger.log('creating upgrader');
-        this.logCreeps();
+        logPopulation();
         Memory.count.upgrader += 1;
       }
     } else if (Memory.count.harvester < harvesters) {
