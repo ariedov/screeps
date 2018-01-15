@@ -38,7 +38,13 @@ module.exports.loop = function () {
     }
 
     if (creep.memory.role === 'harvester') {
-      supervisor.supervise(creep, roleHarvester.run);
+      if (roleHarvester.isBusy(creep)) {
+        supervisor.supervise(creep, roleHarvester.run);
+      } else if (roleRecharger.isBusy(creep)) {
+        supervisor.supervise(creep, roleRecharger.run, true);
+      } else {
+        supervisor.supervise(creep, roleUpgrader.run);
+      }
     }
 
     if (creep.memory.role === 'recharger') {
