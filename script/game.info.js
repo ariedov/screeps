@@ -76,10 +76,10 @@ module.exports = {
       new RoomPosition(source.pos.x - 1, source.pos.y + 1, room.name)
     ];
 
-    return _.reduce(positions, (m, p) => {
+    return _.filter(positions, p => {
       const terrain = Game.map.getTerrainAt(p);
-      m += terrain === 'wall' ? 0 : 1;
-    }, 0);
+      return terrain !== 'wall';
+    }).length;
   },
 
   getSourcesFeedingCreeps() {
