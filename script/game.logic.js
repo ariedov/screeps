@@ -1,5 +1,3 @@
-const gameInfo = require('./game.info');
-const population = require('./population');
 const balancer = require('./balancer');
 
 module.exports = {
@@ -12,40 +10,6 @@ module.exports = {
       }
     } else if (creep.withdraw(source, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
       creep.moveTo(source);
-    }
-  },
-
-  spawnCreeps() {
-    population.manage();
-  },
-
-  updateMemory() {
-    if (!Memory.count) {
-      Memory.count = {};
-    }
-
-    if (!Memory.count.harvester) {
-      Memory.count.harvester = gameInfo.getHarvesters().length;
-    }
-
-    if (!Memory.count.recharger) {
-      Memory.count.recharger = gameInfo.getRechargers().length;
-    }
-
-    if (!Memory.count.chuck) {
-      Memory.count.chuck = gameInfo.getChucks().length;
-    }
-
-    if (!Memory.count.upgrader) {
-      Memory.count.upgrader = gameInfo.getUpgraders().length;
-    }
-
-    if (!Memory.count.builder) {
-      Memory.count.builder = gameInfo.getBuilders().length;
-    }
-
-    if (!Memory.count.warrior) {
-      Memory.count.warrior = gameInfo.getWarriors().length;
     }
   }
 };

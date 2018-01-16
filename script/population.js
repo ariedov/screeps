@@ -1,6 +1,7 @@
 const gameInfo = require('./game.info');
 const logger = require('./logger');
 const factory = require('./factory');
+const memory = require('./memory');
 
 const chucks = 1;
 const rechargers = 2;
@@ -13,61 +14,63 @@ module.exports = {
   manage() {
     const spawn = Game.spawns.Spawn1;
     const roomEnergy = gameInfo.getRoomEnergy(spawn.room);
+    const count = memory.getCreepsCount();
 
-    if (Memory.count.harvester === 0) {
+    if (count.harvesters === 0) {
       if (factory.createWorker(spawn, roomEnergy, 'harvester') === OK) {
         logger.log('creating harvester');
         logPopulation();
-        Memory.count.harvester += 1;
+        memory.incrementHarvester();
       }
-    } else if (Memory.count.upgrader === 0) {
+    } else if (count.upgraders === 0) {
       if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
         logger.log('creating upgrader');
         logPopulation();
-        Memory.count.upgrader += 1;
+        memory.incrementUpgrader();
       }
-    } else if (Memory.count.harvester < harvesters) {
+    } else if (count.harvesters < harvesters) {
       if (factory.createWorker(spawn, roomEnergy, 'harvester') === OK) {
         logger.log('creating harvester');
         logPopulation();
-        Memory.count.harvester += 1;
+        memory.incrementHarvester();
       }
-    } else if (Memory.count.recharger < rechargers) {
+    } else if (count.rechargers < rechargers) {
       if (factory.createWorker(spawn, roomEnergy, 'recharger') === OK) {
         logger.log('creating recharger');
         logPopulation();
-        Memory.count.recharger += 1;
+        memory.incrementRecharger();
       }
-    } else if (Memory.count.chuck < chucks) {
+    } else if (count.chucks < chucks) {
       if (factory.createWorker(spawn, roomEnergy, 'chuck') === OK) {
         logger.log('creating chuck');
         logPopulation();
-        Memory.count.chuck += 1;
+        memory.incrementChuck();
       }
-    } else if (Memory.count.upgrader < upgraders) {
+    } else if (count.upgraders < upgraders) {
       if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
         logger.log('creating upgrader');
         logPopulation();
-        Memory.count.upgrader += 1;
+        memory.incrementUpgrader();
       }
-    } else if (Memory.count.builder < builders) {
+    } else if (count.builders < builders) {
       if (factory.createWorker(spawn, roomEnergy, 'builder') === OK) {
         logger.log('creating builder');
         logPopulation();
-        Memory.count.builder += 1;
+        memory.incrementBuilder();
       }
     }
   }
 };
 
 function logPopulation() {
+  const count = memory.getCreepsCount();
   logger.log(
-    'upgraders: ' + Memory.count.upgrader +
-    ' harvesters: ' + Memory.count.harvester +
-    ' rechargers: ' + Memory.count.recharger +
-    ' chucks: ' + Memory.count.chuck +
-    ' warriors: ' + Memory.count.warrior +
-    ' builders: ' + Memory.count.builder
+    'upgraders: ' + count.upgraders +
+    ' harvesters: ' + count.harvesters +
+    ' rechargers: ' + count.rechargers +
+    ' chucks: ' + count.chucks +
+    ' warriors: ' + count.chucks +
+    ' builders: ' + count.builders
   );
 }
 

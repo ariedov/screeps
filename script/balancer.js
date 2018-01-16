@@ -3,6 +3,7 @@
  */
 
 const gameInfo = require('./game.info');
+const memory = require('./memory');
 const logger = require('./logger');
 
 module.exports = {
@@ -20,12 +21,7 @@ module.exports = {
   },
 
   clearSource(creep) {
-    const feedsFrom = Memory.creeps[creep.name].feedsFrom;
-    if (feedsFrom) {
-      Memory.sources[feedsFrom].feedsCount -= 1;
-      logger.log(feedsFrom + ' is now feeding ' + Memory.sources[feedsFrom].feedsCount + ' creeps');
-      delete Memory.creeps[creep.name].feedsFrom;
-    }
+    memory.clearSource(creep);
   },
 
   getSourceForCreep(creep) {

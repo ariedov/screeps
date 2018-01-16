@@ -1,4 +1,3 @@
-const gameLogic = require('./game.logic');
 const roleHarvester = require('./role.harvester');
 const roleUpgrader = require('./role.upgrader');
 const roleBuilder = require('./role.builder');
@@ -8,15 +7,13 @@ const roleChuck = require('./role.chuck');
 const roleTower = require('./role.tower');
 const roleWarrior = require('./role.warrior');
 const supervisor = require('./supervisor');
-const balancer = require('./balancer');
 const planner = require('./planner');
+const population = require('./population');
+const memory = require('./memory');
 
 function deleteIfExpired(creep) {
   if (!Game.creeps[creep.name]) {
-    balancer.clearSource(creep);
-    const role = Memory.creeps[creep.name].role;
-    Memory.count[role] -= 1;
-    delete Memory.creeps[creep.name];
+    memory.clearCreepData(creep);
   }
 }
 
@@ -24,7 +21,8 @@ module.exports.loop = function () {
   _.each(Memory.creeps, deleteIfExpired);
   planner.placeConstructionSites();
 
-  const towers = Game.spawns.Spawn1.room.find(
+  const room = Game.spawns.Spawn1.room;
+  const towers = room.find(
     FIND_MY_STRUCTURES, {
       filter: {
         structureType: STRUCTURE_TOWER
@@ -82,6 +80,5 @@ module.exports.loop = function () {
     }
   });
 
-  gameLogic.updateMemory();
-  gameLogic.spawnCreeps();
+  population.manage();
 };
