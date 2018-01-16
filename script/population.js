@@ -1,4 +1,3 @@
-const gameInfo = require('./game.info');
 const logger = require('./logger');
 const factory = require('./factory');
 const memory = require('./memory');
@@ -11,49 +10,47 @@ const builders = 6;
 
 module.exports = {
 
-  manage() {
-    const spawn = Game.spawns.Spawn1;
-    const roomEnergy = gameInfo.getRoomEnergy(spawn.room);
+  manage(spawn, roomCapacity) {
     const count = memory.getCreepsCount();
 
     if (count.harvesters === 0) {
-      if (factory.createWorker(spawn, roomEnergy, 'harvester') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'harvester') === OK) {
         logger.log('creating harvester');
         logPopulation();
         memory.incrementHarvester();
       }
     } else if (count.upgraders === 0) {
-      if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'upgrader') === OK) {
         logger.log('creating upgrader');
         logPopulation();
         memory.incrementUpgrader();
       }
     } else if (count.harvesters < harvesters) {
-      if (factory.createWorker(spawn, roomEnergy, 'harvester') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'harvester') === OK) {
         logger.log('creating harvester');
         logPopulation();
         memory.incrementHarvester();
       }
     } else if (count.rechargers < rechargers) {
-      if (factory.createWorker(spawn, roomEnergy, 'recharger') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'recharger') === OK) {
         logger.log('creating recharger');
         logPopulation();
         memory.incrementRecharger();
       }
     } else if (count.chucks < chucks) {
-      if (factory.createWorker(spawn, roomEnergy, 'chuck') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'chuck') === OK) {
         logger.log('creating chuck');
         logPopulation();
         memory.incrementChuck();
       }
     } else if (count.upgraders < upgraders) {
-      if (factory.createWorker(spawn, roomEnergy, 'upgrader') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'upgrader') === OK) {
         logger.log('creating upgrader');
         logPopulation();
         memory.incrementUpgrader();
       }
     } else if (count.builders < builders) {
-      if (factory.createWorker(spawn, roomEnergy, 'builder') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'builder') === OK) {
         logger.log('creating builder');
         logPopulation();
         memory.incrementBuilder();

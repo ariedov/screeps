@@ -23,6 +23,10 @@ module.exports = {
     return room.energyAvailable;
   },
 
+  getRoomCapacity(room) {
+    return room.energyCapacityAvailable;
+  },
+
   getHarvesters() {
     return _.filter(Game.creeps, c => {
       return c.memory.role === 'harvester';

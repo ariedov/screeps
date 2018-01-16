@@ -21,7 +21,8 @@ module.exports.loop = function () {
   _.each(Memory.creeps, deleteIfExpired);
   planner.placeConstructionSites();
 
-  const room = Game.spawns.Spawn1.room;
+  const spawn = Game.spawns.Spawn1;
+  const room = spawn.room;
   const towers = room.find(
     FIND_MY_STRUCTURES, {
       filter: {
@@ -80,5 +81,5 @@ module.exports.loop = function () {
     }
   });
 
-  population.manage();
+  population.manage(spawn, room.energyCapacityAvailable);
 };
