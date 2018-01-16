@@ -29,8 +29,6 @@ module.exports = {
   }
 };
 
-const creepsForSource = 5;
-
 function findClosestAvailableSource(creep, sourceOnly = false) {
   let sources = creep.room.find(FIND_SOURCES, {
     filter(s) {
@@ -57,17 +55,30 @@ function findClosestAvailableSource(creep, sourceOnly = false) {
   let result = _.find(sources, s => {
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {
-        feedsCount: 0
+        feedsCount: 0,
+        creepsForSource: getCreepsForSource(s)
       };
     }
 
-    return Memory.sources[s.id].feedsCount < creepsForSource;
+    if (!Memory.sources[s.id].creepsForSource) {
+      Memory.sources[s.id].creepsForSource = getCreepsForSource(s);
+    }
+
+    return Memory.sources[s.id].feedsCount < Memory.sources[s.id].creepsForSource;
   });
 
   if (result === undefined) {
     result = sources[0];
   }
   return result;
+}
+
+function getCreepsForSource(source) {
+  let creepsForSource = 1;
+  if (source.energy !== undefined) {
+    creepsForSource = gameInfo.getWaysToSourceCount(source) + 2;
+  }
+  return creepsForSource;
 }
 
 // Code for harvesting from containers

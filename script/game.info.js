@@ -63,6 +63,25 @@ module.exports = {
     });
   },
 
+  getWaysToSourceCount(source) {
+    const room = source.room;
+    const positions = [
+      new RoomPosition(source.pos.x - 1, source.pos.y, room.name),
+      new RoomPosition(source.pos.x + 1, source.pos.y, room.name),
+      new RoomPosition(source.pos.x, source.pos.y - 1, room.name),
+      new RoomPosition(source.pos.x, source.pos.y + 1, room.name),
+      new RoomPosition(source.pos.x + 1, source.pos.y + 1, room.name),
+      new RoomPosition(source.pos.x - 1, source.pos.y - 1, room.name),
+      new RoomPosition(source.pos.x + 1, source.pos.y - 1, room.name),
+      new RoomPosition(source.pos.x - 1, source.pos.y + 1, room.name)
+    ];
+
+    return _.reduce(positions, (m, p) => {
+      const terrain = Game.map.getTerrainAt(p);
+      m += terrain === 'wall' ? 0 : 1;
+    }, 0);
+  },
+
   getSourcesFeedingCreeps() {
     const sources = {};
     _.each(Game.creeps, c => {
