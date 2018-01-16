@@ -84,11 +84,13 @@ module.exports = {
   },
 
   clearCreepData(creep) {
-    this.clearSource(creep);
+    if (!creep.name) {
+      this.clearSource(creep);
 
-    const role = Memory.creeps[creep.name].role;
-    Memory.count[role] -= 1;
-    delete Memory.creeps[creep.name];
+      const role = Memory.creeps[creep.name].role;
+      Memory.count[role] -= 1;
+      delete Memory.creeps[creep.name];
+    }
   }
 };
 
