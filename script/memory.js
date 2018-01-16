@@ -84,7 +84,7 @@ module.exports = {
   },
 
   clearCreepData(creep) {
-    if (!creep.name) {
+    if (creep.name) {
       this.clearSource(creep);
 
       const role = Memory.creeps[creep.name].role;
