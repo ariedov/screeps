@@ -6,7 +6,7 @@ module.exports = {
   createWorker(spawn, roomCapacity = 0, role = '') {
     const name = role.toUpperCase() + '_' + Game.time;
     const body = getWorkerBodyparts(roomCapacity);
-    const result = spawn.spawnCreep(body, {
+    const result = spawn.spawnCreep(body, name, {
       memory: {
         name,
         role
