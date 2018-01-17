@@ -6,7 +6,8 @@ const chucks = 1;
 const rechargers = 2;
 const harvesters = 4;
 const upgraders = 4;
-const builders = 6;
+const fixers = 1;
+const builders = 4;
 
 module.exports = {
 
@@ -49,6 +50,12 @@ module.exports = {
         logPopulation();
         memory.incrementUpgrader();
       }
+    } else if (count.fixers < fixers) {
+      if (factory.createWorker(spawn, roomCapacity, 'fixer') === OK) {
+        logger.log('creating fixer');
+        logPopulation();
+        memory.incrementFixer();
+      }
     } else if (count.builders < builders) {
       if (factory.createWorker(spawn, roomCapacity, 'builder') === OK) {
         logger.log('creating builder');
@@ -66,7 +73,8 @@ function logPopulation() {
     ' harvesters: ' + count.harvesters +
     ' rechargers: ' + count.rechargers +
     ' chucks: ' + count.chucks +
-    ' warriors: ' + count.chucks +
+    ' warriors: ' + count.warriors +
+    ' fixers: ' + count.fixers +
     ' builders: ' + count.builders
   );
 }

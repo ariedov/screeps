@@ -53,6 +53,16 @@ module.exports = {
     }
   },
 
+  incrementFixer() {
+    initCount();
+
+    if (Memory.count.fixer) {
+      Memory.count.fixer += 1;
+    } else {
+      Memory.count.fixer = gameInfo.getFixers().length;
+    }
+  },
+
   incrementWarrior() {
     initCount();
 
@@ -70,6 +80,7 @@ module.exports = {
       upgraders: Memory.count.upgrader || 0,
       chucks: Memory.count.chuck || 0,
       builders: Memory.count.builder || 0,
+      fixers: Memory.count.fixer || 0,
       warrior: Memory.count.warrior || 0
     };
   },
