@@ -6,7 +6,7 @@ module.exports = {
   supervise(creep, work, sourceOnly = false) {
     const working = creep.memory.working || creep.memory.working === undefined;
     if (working && creep.carry.energy === 0) {
-      if (balancer.assignToSource(creep, sourceOnly) !== undefined) {
+      if (balancer.assignToSource(creep, sourceOnly)) {
         creep.memory.working = false;
         logger.logCreep(creep, 'now feeding');
       }
