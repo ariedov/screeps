@@ -21,7 +21,7 @@ module.exports = {
     const repair = creep.room.find(FIND_STRUCTURES, {
       filter: shouldBeRepaired
     });
-    return creep.memory.target || repair.length;
+    return repair.length;
   }
 };
 

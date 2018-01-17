@@ -21,7 +21,7 @@ module.exports = {
   isBusy(creep) {
     const build = creep.room.find(FIND_MY_CONSTRUCTION_SITES);
 
-    return creep.memory.target || build.length;
+    return build.length;
   }
 };
 
