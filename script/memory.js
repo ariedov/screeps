@@ -67,7 +67,7 @@ module.exports = {
     return {
       harvesters: Memory.count.harvester || 0,
       rechargers: Memory.count.recharger || 0,
-      upgraders: Memory.count.upgraders || 0,
+      upgraders: Memory.count.upgrader || 0,
       chucks: Memory.count.chuck || 0,
       builders: Memory.count.builder || 0,
       warrior: Memory.count.warrior || 0
