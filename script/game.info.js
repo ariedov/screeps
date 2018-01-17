@@ -57,6 +57,12 @@ module.exports = {
     });
   },
 
+  getFixers() {
+    return _.filter(Game.creeps, c => {
+      return c.memory.role === 'fixer';
+    });
+  },
+
   getWarriors() {
     return _.filter(Game.creeps, c => {
       return c.memory.role === 'warrior';
