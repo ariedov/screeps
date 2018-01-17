@@ -52,7 +52,7 @@ function findClosestAvailableSource(creep, sourceOnly = false) {
     Memory.sources = gameInfo.getSourcesFeedingCreeps();
   }
 
-  let result = _.find(sources, s => {
+  const result = _.find(sources, s => {
     if (Memory.sources[s.id] === undefined) {
       Memory.sources[s.id] = {
         feedsCount: 0,
@@ -67,9 +67,6 @@ function findClosestAvailableSource(creep, sourceOnly = false) {
     return Memory.sources[s.id].feedsCount < Memory.sources[s.id].creepsForSource;
   });
 
-  if (result === undefined) {
-    result = sources[0];
-  }
   return result;
 }
 
