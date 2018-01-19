@@ -72,6 +72,8 @@ module.exports.loop = function () {
     if (creep.memory.role === 'builder') {
       if (roleBuilder.isBusy(creep)) {
         supervisor.supervise(creep, roleBuilder.run);
+      } else if (roleFixer.isBusy(creep)) {
+        supervisor.supervise(creep, roleFixer.run);
       } else {
         supervisor.supervise(creep, roleUpgrader.run);
       }
