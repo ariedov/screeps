@@ -15,13 +15,13 @@ module.exports = {
     const count = memory.getCreepsCount();
 
     if (count.harvesters === 0) {
-      if (factory.createWorker(spawn, roomCapacity, 'harvester') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'harvester', true) === OK) {
         logger.log('creating harvester');
         logPopulation();
         memory.incrementHarvester();
       }
     } else if (count.upgraders === 0) {
-      if (factory.createWorker(spawn, roomCapacity, 'upgrader') === OK) {
+      if (factory.createWorker(spawn, roomCapacity, 'upgrader', true) === OK) {
         logger.log('creating upgrader');
         logPopulation();
         memory.incrementUpgrader();
