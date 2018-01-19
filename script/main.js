@@ -94,5 +94,5 @@ module.exports.loop = function () {
     }
   });
 
-  population.manage(spawn, room.energyAvailable);
+  population.manage(spawn, room.energyCapacityAvailable);
 };
