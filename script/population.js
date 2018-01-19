@@ -4,10 +4,10 @@ const memory = require('./memory');
 
 const chucks = 1;
 const rechargers = 2;
-const harvesters = 4;
-const upgraders = 4;
+const harvesters = 3;
+const upgraders = 3;
 const fixers = 1;
-const builders = 4;
+const builders = 3;
 
 module.exports = {
 
