@@ -31,10 +31,12 @@ module.exports = {
   isCreepSourceEmpty(creep) {
     const source = this.getSourceForCreep(creep);
     let sourceEmpty = false;
-    if (source.energy) {
-      sourceEmpty = source.energy === 0;
-    } else {
-      sourceEmpty = source.store[RESOURCE_ENERGY] === 0;
+    if (source !== undefined) {
+      if (source.energy === undefined) {
+        sourceEmpty = source.store[RESOURCE_ENERGY] === 0;
+      } else {
+        sourceEmpty = source.energy === 0;
+      }
     }
     return sourceEmpty;
   }
