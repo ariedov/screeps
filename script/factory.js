@@ -22,7 +22,7 @@ module.exports = {
 function getWorkerBodyparts(capacity = 0, justEnough = false) {
   const bodyparts = [WORK, CARRY, MOVE];
   let cost = BODYPART_COST[WORK] + BODYPART_COST[CARRY] + BODYPART_COST[MOVE];
-  const availableEnergy = justEnough ? cost : capacity;
+  const availableEnergy = justEnough ? cost : capacity - cost;
   for (let i = 1, nextPart = bodyparts[0]; cost + BODYPART_COST[nextPart] < availableEnergy && i < maxPartsCount; ++i) {
     bodyparts.push(nextPart);
     cost += BODYPART_COST[nextPart];
