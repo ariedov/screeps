@@ -26,6 +26,17 @@ module.exports = {
 
   getSourceForCreep(creep) {
     return Game.getObjectById(creep.memory.feedsFrom);
+  },
+
+  isCreepSourceEmpty(creep) {
+    const source = this.getSourceForCreep(creep);
+    let sourceEmpty = false;
+    if (source.energy) {
+      sourceEmpty = source.energy === 0;
+    } else {
+      sourceEmpty = source.store[RESOURCE_ENERGY] === 0;
+    }
+    return sourceEmpty;
   }
 };
 

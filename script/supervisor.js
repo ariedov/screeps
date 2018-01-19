@@ -11,7 +11,8 @@ module.exports = {
         logger.logCreep(creep, 'now feeding');
       }
     }
-    if (!working && creep.carry.energy === creep.carryCapacity) {
+    if (!working &&
+        (creep.carry.energy === creep.carryCapacity || balancer.isCreepSourceEmpty(creep))) {
       creep.memory.working = true;
       logger.logCreep(creep, 'now working');
       balancer.clearSource(creep);
