@@ -23,6 +23,8 @@ module.exports.loop = function () {
   planner.placeConstructionSites();
 
   const spawn = Game.spawns.Spawn1;
+  if (spawn === undefined) return;
+  
   const room = spawn.room;
   const towers = room.find(
     FIND_MY_STRUCTURES, {
