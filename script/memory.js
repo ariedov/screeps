@@ -74,14 +74,19 @@ module.exports = {
   },
 
   getCreepsCount() {
+    var count = Memory.count;
+    if (count === undefined) {
+     count = {};
+    }
+    
     return {
-      harvesters: Memory.count.harvester || 0,
-      rechargers: Memory.count.recharger || 0,
-      upgraders: Memory.count.upgrader || 0,
-      chucks: Memory.count.chuck || 0,
-      builders: Memory.count.builder || 0,
-      fixers: Memory.count.fixer || 0,
-      warrior: Memory.count.warrior || 0
+      harvesters: count.harvester || 0,
+      rechargers: count.recharger || 0,
+      upgraders: count.upgrader || 0,
+      chucks: count.chuck || 0,
+      builders: count.builder || 0,
+      fixers: count.fixer || 0,
+      warrior: count.warrior || 0
     };
   },
 
